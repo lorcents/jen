@@ -7,6 +7,8 @@ import cors from "cors";
 
 import route from "./routes";
 
+import { requestLogger, errorLogger, errorResponder, invalidPathHandler } from './middleware'
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -18,7 +20,15 @@ app.use(
 
 app.use(cors());
 
+app.use(requestLogger);
+
 app.use("/", route);
+
+app.use(errorLogger);
+
+app.use(errorResponder);
+
+app.use(invalidPathHandler);
 
 const port = process.env.PORT || 8001;
 

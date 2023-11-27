@@ -1,17 +1,17 @@
-import express from "express";
+import express, { NextFunction } from "express";
 
 import { SendMoneyService } from "../services/sendMoney.service";
 
 import { referenceFn } from "../util/reference";
 
 export const sendMoney = {
-  pesalinkBank: async (req: express.Request, res: express.Response) => {
+  pesalinkBank: async (req: express.Request, res: express.Response,next :express.NextFunction) => {
     const ref = referenceFn(12);
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
       },
       destination: {
         type: "bank",
@@ -30,20 +30,26 @@ export const sendMoney = {
       },
     };
 
-    const response = await SendMoneyService.sendMoneyPesaLinkToBankAccount(
-      data
-    );
+    try{
+      const response = await SendMoneyService.sendMoneyPesaLinkToBankAccount(
+        data
+      );
+  
+      res.json(response);
 
-    res.json(response);
+    }catch(err){
+      next(err);
+    }
+    
   },
 
-  sendwithEquity: async (req: express.Request, res: express.Response) => {
+  sendwithEquity: async (req: express.Request, res: express.Response, next:express.NextFunction) => {
     const ref = referenceFn(12);
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
       },
       destination: {
         type: "bank",
@@ -61,18 +67,24 @@ export const sendMoney = {
       },
     };
 
-    const response = await SendMoneyService.sendMoneyWithinEquityBank(data);
+    try{
+      const response = await SendMoneyService.sendMoneyWithinEquityBank(data);
 
     res.json(response);
+    }catch(err){
+      next(err)
+    }
+
+    
   },
 
-  sendwithRTGS: async (req: express.Request, res: express.Response) => {
+  sendwithRTGS: async (req: express.Request, res: express.Response, next:express.NextFunction) => {
     const ref = referenceFn(12);
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
         currency: "KES",
       },
       destination: {
@@ -92,18 +104,24 @@ export const sendMoney = {
       },
     };
 
-    const response = await SendMoneyService.sendMoneyRTGS(data);
+    try {
+      const response = await SendMoneyService.sendMoneyRTGS(data);
 
-    res.json(response);
+      res.json(response);
+    }catch(err){
+      next(err);
+    }
+
+    
   },
-  sendwithSWIFT: async (req: express.Request, res: express.Response) => {
+  sendwithSWIFT: async (req: express.Request, res: express.Response,next:express.NextFunction) => {
     const ref = referenceFn(12);
 
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
         sourceCurrency: "KES",
       },
       destination: {
@@ -126,19 +144,24 @@ export const sendMoney = {
       },
     };
 
-    const response = await SendMoneyService.sendMoneySWIFT(data);
+    try {
+      const response = await SendMoneyService.sendMoneySWIFT(data);
 
-    res.json(response);
+      res.json(response);
+    }catch(err){
+      next(err);
+    }
+   
   },
 
-  sendwithMobilewallet: async (req: express.Request, res: express.Response) => {
+  sendwithMobilewallet: async (req: express.Request, res: express.Response,next:NextFunction) => {
     const reqBody = req.body;
     const ref = referenceFn(12);
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
       },
       destination: {
         type: "mobile",
@@ -157,28 +180,35 @@ export const sendMoney = {
       },
     };
 
-    const response = await SendMoneyService.sendToMobileWallet(data);
+    try {
+      const response = await SendMoneyService.sendToMobileWallet(data);
 
-    res.json(response);
+      res.json(response);
+    }catch(err){
+      next(err);
+    }
+
+    
   },
 
   sendwithPesalinkMobile: async (
     req: express.Request,
-    res: express.Response
+    res: express.Response,
+    next:express.NextFunction
   ) => {
     const ref = referenceFn(12);
     const data = {
       source: {
         countryCode: "KE",
         name: "John Doe",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
       },
       destination: {
         type: "mobile",
         countryCode: "KE",
         name: "Tom Doe",
         bankCode: "01",
-        accountNumber: "1450160649886",
+        accountNumber: "1215491395",
         mobileNumber: "0722000000",
       },
       transfer: {
@@ -190,11 +220,15 @@ export const sendMoney = {
         description: "Some remarks here",
       },
     };
+try{
+  const response = await SendMoneyService.sendMoneyPesaLinkToMobileNumber(
+    data
+  );
 
-    const response = await SendMoneyService.sendMoneyPesaLinkToMobileNumber(
-      data
-    );
-
-    res.json(response);
+  res.json(response);
+}catch(err){
+  next(err)
+}
+    
   },
 };

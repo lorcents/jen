@@ -1,9 +1,9 @@
-import express from "express";
+import express, { NextFunction } from "express";
 
 import { kycService } from "../services/kyc.service";
 
 export const kycServiceCtrl = {
-  IDVerification: async (req: express.Request, res: express.Response) => {
+  IDVerification: async (req: express.Request, res: express.Response, next : NextFunction) => {
     const data = {
       identity: {
         documentType: "ALIENID",
@@ -14,7 +14,12 @@ export const kycServiceCtrl = {
         countryCode: "KE",
       },
     };
+
+    try{
     const response = await kycService.IDVerification(data);
     res.json(response);
+    } catch(err){
+      next(err)
+    }
   },
 };
