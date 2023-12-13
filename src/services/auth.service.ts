@@ -5,7 +5,14 @@ import { AuthOptions, AuthResponse } from "../interface/auth.interface";
 import { url, config } from "../config";
 
 export abstract class AuthService {
-  static async getAuth(): Promise<AuthResponse> {
+  private static accessTokenData = {
+    accessToken :"",
+    expiresIn: new Date(),
+    issuedAt: new Date(),
+    refreshToken:'',
+    tokenType: ''
+  }
+  private static async getAuth(): Promise<AuthResponse> {
     const merchantCode = config.merchantCode!;
     const consumerSecret = config.consumerSecret!;
     const apiKey = config.ApiKey!;
@@ -32,14 +39,21 @@ export abstract class AuthService {
 
     console.log("jenga-getAuth %o", response);
 
-    const { expiresIn: expiresInText, issuedAt: issuedAtText } = response;
+    this.accessTokenData = response
 
-    return {
-      ...response,
-      ...{
-        expiresIn: moment.utc(expiresInText).toDate(),
-        issuedAt: moment.utc(issuedAtText).toDate(),
-      },
-    };
+    return response;
+  }
+
+  public static async getAccessToken(): Promise<AuthResponse> {
+    // Check if the token is expired or not set
+    if (this.isTokenExpired()) {
+      return await this.getAuth();
+    } else {
+      return this.accessTokenData;
+    }
+  }
+
+  private static isTokenExpired(): boolean {
+    return this.accessTokenData.expiresIn  < new Date();
   }
 }

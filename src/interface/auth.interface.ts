@@ -8,5 +8,5 @@ export interface AuthResponse {
   refreshToken: string;
   expiresIn: Date;
   issuedAt: Date;
-  tokenType: "Bearer";
+  tokenType: string ;
 }

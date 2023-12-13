@@ -15,7 +15,7 @@ export abstract class AccountService {
       `${countryCode}${accountNumber}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
@@ -28,8 +28,6 @@ export abstract class AccountService {
         },
       })
     ).data;
-
-    console.log("jenga-getBalance %o", response);
 
     return response;
   }

@@ -33,7 +33,7 @@ export abstract class kycService {
     );
 
     const kycIdUrl = url.kycIdUrl!;
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({

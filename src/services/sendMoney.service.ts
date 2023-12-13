@@ -41,7 +41,7 @@ export abstract class SendMoneyService {
       `${amount}${currencyCode}${reference}${destinationName}${accountNumber}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
@@ -96,7 +96,7 @@ export abstract class SendMoneyService {
       `${accountNumber}${amount}${currencyCode}${reference}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
@@ -157,7 +157,7 @@ export abstract class SendMoneyService {
       `${reference}${date}${accountNumber}${destinationAccountNumber}${amount}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
@@ -221,7 +221,7 @@ export abstract class SendMoneyService {
       `${reference}${date}${accountNumber}${destinationAccountNumber}${amount}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
@@ -281,7 +281,7 @@ export abstract class SendMoneyService {
         : `${accountNumber}${amount}${currencyCode}${reference}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const rawResponse: Record<string, unknown> = (
       await axios({
@@ -346,7 +346,7 @@ export abstract class SendMoneyService {
       `${amount}${currencyCode}${reference}${destinationName}${accountNumber}`
     );
 
-    const { accessToken } = await AuthService.getAuth();
+    const { accessToken } = await AuthService.getAccessToken();
 
     const response: any = (
       await axios({
